@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd eureka-server
+mvn clean install docker:build
+cd ..
+docker-compose up -d eureka-server
