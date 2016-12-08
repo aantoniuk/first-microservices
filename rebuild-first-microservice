@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd first-microservice
+mvn clean install docker:build
+cd ..
+docker-compose up -d first-microservice

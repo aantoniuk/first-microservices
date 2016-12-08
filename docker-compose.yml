@@ -57,87 +57,39 @@
 ##  command: "-ip 192.168.99.100 consul://192.168.99.100:8500"
 ##  restart: always
 #
-#rent-service:
-#  image: rent-service
-#  dns: 172.17.0.1
-#  ports:
-#    - "8080"
-#  links:
-#    - payment-service
-#    - rabbitmq
-#    - eureka-server
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    SERVICE_NAME: rent-service
+second-microservice:
+  image: second-microservice
+  dns: 172.17.0.1
+  ports:
+    - "8080"
+  links:
+    - rabbitmq
+    - eureka-server
+    - first-microservice
+  environment:
+    RABBITMQ_HOST: rabbitmq
+    EUREKA_SERV: http://eureka:8761/eureka/
+    SERVICE_NAME: second-microservice
 #    SERVICE_CHECK_HTTP: /health
-#    SPRING_PROFILES_ACTIVE: consul
+    SPRING_PROFILES_ACTIVE: consul
 #    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
-#
-#payment-service:
-#  image: payment-service
-#  dns: 172.17.0.1
-#  ports:
-#    - "8080"
-#  links:
-#    - rabbitmq
-#    - eureka-server
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    SERVICE_NAME: payment-service
+
+first-microservice:
+  image: first-microservice
+  dns: 172.17.0.1
+  ports:
+    - "8080"
+  links:
+    - rabbitmq
+    - eureka-server
+  environment:
+    RABBITMQ_HOST: rabbitmq
+    EUREKA_SERV: http://eureka:8761/eureka/
+    SERVICE_NAME: first-microservice
 #    SERVICE_CHECK_HTTP: /health
-#    SPRING_PROFILES_ACTIVE: consul
+    SPRING_PROFILES_ACTIVE: consul
 #    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
-#
-#security-service:
-#  image: security-service
-#  dns: 172.17.0.1
-#  ports:
-#    - "8080"
-#  links:
-#    - rabbitmq
-#    - eureka-server
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    SERVICE_NAME: security-service
-#    SERVICE_CHECK_HTTP: /health
-#    SPRING_PROFILES_ACTIVE: consul
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
-#
-#blockchain-service:
-#  image: blockchain-service
-#  dns: 172.17.0.1
-#  ports:
-#    - "8080"
-#  links:
-#    - rabbitmq
-#    - eureka-server
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    SERVICE_NAME: blockchain-service
-#    SERVICE_CHECK_HTTP: /health
-#    SPRING_PROFILES_ACTIVE: consul
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
-#
-#insurance-service:
-#  image: insurance-service
-#  dns: 172.17.0.1
-#  ports:
-#    - "8080"
-#  links:
-#    - rabbitmq
-#    - eureka-server
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    SERVICE_NAME: insurance-service
-#    SERVICE_CHECK_HTTP: /health
-#    SPRING_PROFILES_ACTIVE: consul
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
-#
+
 rabbitmq:
   image: rabbitmq:3-management
   hostname: rabbitmq
