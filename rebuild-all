@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./rebuild-eureka-server
+./rebuild-ops-server
+./rebuild-gateway-server
+./rebuild-turbine-server
+./rebuild-first-microservice
+./rebuild-second-microservice

@@ -38,7 +38,8 @@ public class SecondApplication {
 
     @RequestMapping(value = "/random", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public SecondResponse getRandomUUID() {
-        return new SecondResponse(firstClient.getRandomUUID(), UUID.randomUUID().toString());
+        String firstUUID = firstClient.getRandomUUID();
+        return new SecondResponse(firstUUID, UUID.randomUUID().toString());
     }
 
     @Data

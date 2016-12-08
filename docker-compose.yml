@@ -10,33 +10,33 @@ gateway-server:
   links:
     - first-microservice
     - second-microservice
-#    - turbine-server
-#    - ops-server
+    - turbine-server
+    - zipkin
     - rabbitmq
     - eureka-server
   restart: always
-#
-#ops-server:
-#  image: ops-server
-#  container_name: ops-server
-#  dns: 172.17.0.1
-#  ports:
-#    - "9411:9411"
-#  restart: always
-#
-#turbine-server:
-#  image: turbine-server
-#  container_name: turbine-server
-#  dns: 172.17.0.1
-#  environment:
-#    RABBITMQ_HOST: rabbitmq
-#  links:
-#    - rent-service
-#    - payment-service
-#    - rabbitmq
-#  ports:
-#    - "9001:9001"
-#  restart: always
+
+zipkin:
+  image: openzipkin/zipkin
+  container_name: zipkin
+  dns: 172.17.0.1
+  ports:
+    - "9411:9411"
+  restart: always
+
+turbine-server:
+  image: turbine-server
+  container_name: turbine-server
+  dns: 172.17.0.1
+  environment:
+    RABBITMQ_HOST: rabbitmq
+  links:
+    - first-microservice
+    - second-microservice
+    - rabbitmq
+  ports:
+    - "9001:9001"
+  restart: always
 #
 #consul:
 #  image: gliderlabs/consul-server:0.5
@@ -71,9 +71,8 @@ second-microservice:
     RABBITMQ_HOST: rabbitmq
     EUREKA_SERV: http://eureka:8761/eureka/
     SERVICE_NAME: second-microservice
-#    SERVICE_CHECK_HTTP: /health
-    SPRING_PROFILES_ACTIVE: consul
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
+    SERVICE_CHECK_HTTP: /health
+    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
 
 first-microservice:
   image: first-microservice
@@ -88,9 +87,8 @@ first-microservice:
     RABBITMQ_HOST: rabbitmq
     EUREKA_SERV: http://eureka:8761/eureka/
     SERVICE_NAME: first-microservice
-#    SERVICE_CHECK_HTTP: /health
-    SPRING_PROFILES_ACTIVE: consul
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
+    SERVICE_CHECK_HTTP: /health
+    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
 
 rabbitmq:
   image: rabbitmq:3-management
@@ -110,5 +108,5 @@ eureka-server:
   environment:
     RABBITMQ_HOST: rabbitmq
     SERVICE_NAME: eureka-service
-#    SERVICE_CHECK_HTTP: /health
-#    SPRING_ZIPKIN_BASEURL: http://192.168.99.101:9000
+    SERVICE_CHECK_HTTP: /health
+    SPRING_ZIPKIN_BASEURL: http://192.168.99.100:9000
