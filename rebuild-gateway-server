@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd gateway-server
+mvn clean install docker:build
+cd ..
+docker-compose up -d gateway-server

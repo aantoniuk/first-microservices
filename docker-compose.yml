@@ -1,20 +1,20 @@
-#gateway-server:
-#  image: gateway-server
-#  container_name: gateway-server
-#  dns: 172.17.0.1
-#  ports:
-#    - "9000:9000"
-#  environment:
-#    EUREKA_SERV: http://eureka:8761/eureka/
-#    RABBITMQ_HOST: rabbitmq
-#  links:
-#    - rent-service
-#    - payment-service
+gateway-server:
+  image: gateway-server
+  container_name: gateway-server
+  dns: 172.17.0.1
+  ports:
+    - "9000:9000"
+  environment:
+    EUREKA_SERV: http://eureka:8761/eureka/
+    RABBITMQ_HOST: rabbitmq
+  links:
+    - first-microservice
+    - second-microservice
 #    - turbine-server
 #    - ops-server
-#    - rabbitmq
-#    - eureka-server
-#  restart: always
+    - rabbitmq
+    - eureka-server
+  restart: always
 #
 #ops-server:
 #  image: ops-server
@@ -59,6 +59,7 @@
 #
 second-microservice:
   image: second-microservice
+  container_name: second-microservice
   dns: 172.17.0.1
   ports:
     - "8080"
@@ -76,6 +77,7 @@ second-microservice:
 
 first-microservice:
   image: first-microservice
+  container_name: first-microservice
   dns: 172.17.0.1
   ports:
     - "8080"
@@ -92,6 +94,7 @@ first-microservice:
 
 rabbitmq:
   image: rabbitmq:3-management
+  container_name: rabbitmq
   hostname: rabbitmq
   ports:
     - "5672:5672"
@@ -99,6 +102,7 @@ rabbitmq:
 
 eureka-server:
   image: eureka-server
+  container_name: eureka-server
   dns: 172.17.0.1
   hostname: eureka
   ports:

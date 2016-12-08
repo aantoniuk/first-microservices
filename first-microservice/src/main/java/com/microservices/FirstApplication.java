@@ -24,7 +24,7 @@ public class FirstApplication {
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     public String getRandomUUID() throws InterruptedException {
-        TimeUnit.MICROSECONDS.sleep(500);
+        TimeUnit.MILLISECONDS.sleep(500);
         return UUID.randomUUID().toString();
     }
 }
