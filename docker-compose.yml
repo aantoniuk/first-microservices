@@ -9,9 +9,9 @@ gateway-server:
     RABBITMQ_HOST: rabbitmq
   links:
     - first-microservice
+    - zipkin
     - second-microservice
     - turbine-server
-    - zipkin
     - rabbitmq
     - eureka-server
   restart: always
@@ -37,26 +37,7 @@ turbine-server:
   ports:
     - "9001:9001"
   restart: always
-#
-#consul:
-#  image: gliderlabs/consul-server:0.5
-#  container_name: consul
-#  ports:
-#    - "8400:8400"
-#    - "8500:8500"
-#    - "53:8600/udp"
-#  command: "-bootstrap -advertise 192.168.99.100 -ui-dir /ui"
-#  restart: always
-#
-##registrator:
-##  image: gliderlabs/registrator
-##  container_name: registrator
-##  net: "host"
-##  volumes:
-##    - "/var/run/docker.sock:/tmp/docker.sock"
-##  command: "-ip 192.168.99.100 consul://192.168.99.100:8500"
-##  restart: always
-#
+
 second-microservice:
   image: second-microservice
   container_name: second-microservice
